@@ -39,6 +39,7 @@ routes.use(function (req,res,next) {
 })
 
 routes.get('/sellerHome', Controller.sellerHome)
+routes.get('/products/:id',Controller.productByUserId)
 
 
 module.exports = routes

@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Seller List</title>
 </head>
 <body>
- <h1>masuk ke seller homepage</h1>
+ <table border="1">
+    <thead>
+        <th>No</th>
+        <th>Username</th>
+        <th>Total Product</th>
+        <th>Action</th>
+    </thead>
+    <tbody>
+        <%result.forEach(el=>{%>
+            <tr>
+                <td><%=el.id%></td>
+                <td><%=el.username%></td>
+                <td><%=el.Products.length%></td>
+                <td><button><a href="/products/<%=el.id%>">Product Detail</a></button></td>
+            </tr>
+            <%})%>
+    </tbody>
+ </table>
 </body>
 </html>

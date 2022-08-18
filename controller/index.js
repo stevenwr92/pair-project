@@ -1,9 +1,41 @@
-const {User} = require('../models')
 const bcrypt = require('bcryptjs')
+const {User,Product,Category}=require('../models/index')
 
 class Controller {
     static home(req,res) {
         res.render('home')
+    }
+    
+    static sellerHome(req,res) {
+        User.findAll({
+            include:Product,
+            required:true
+        })
+        .then(result=>{
+            // res.send(result)
+            res.render('sellerHome', {result})
+        })
+        .catch(err=>{
+            res.send(err)
+        })
+    }
+
+    static productByUserId(req,res){
+        User.findAll({
+            include:Product,
+            required:true
+        },{
+            where:{
+                id:req.params.id
+            }
+        })
+        .then(result=>{
+            let productUserId=result.forEach(el => {
+                return el.Products
+            });
+            // res.send(productUserId)
+            res.render('productByUserId',{productUserId})
+        })
     }
 
     static register(req, res) {
@@ -58,9 +90,6 @@ class Controller {
         })
     }
 
-    static sellerHome(req,res) {
-        res.render('sellerhome')
-    }
 }
 
 module.exports= Controller
