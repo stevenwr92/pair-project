@@ -1,7 +1,6 @@
 {
   "name": "pair-project",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,5 +19,14 @@
   },
   "devDependencies": {
     "sequelize-cli": "^6.4.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevenwr92/pair-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stevenwr92/pair-project/issues"
+  },
+  "homepage": "https://github.com/stevenwr92/pair-project#readme",
+  "description": ""
 }
