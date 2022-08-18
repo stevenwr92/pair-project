@@ -3,16 +3,13 @@ const Controller = require('../controller/index')
 
 
 routes.get('/', Controller.home)
-//GET register
+
 
 routes.get('/register', Controller.register)
 
 
-//POST register
-
 routes.post('/register', Controller.postRegister)
 
-// login
 
 routes.get('/login', Controller.login)
 
