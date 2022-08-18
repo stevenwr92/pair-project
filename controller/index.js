@@ -7,12 +7,14 @@ class Controller {
     }
 
     static register(req, res) {
-        res.render('register')
+        const {error} = req.query
+        res.render('register', {error})
+
     }
 
     static postRegister(req,res) {
        let body = {
-        username: req.body.username,
+        email: req.body.email,
         password: req.body.password,
         role: req.body.role
        } 
@@ -23,7 +25,12 @@ class Controller {
         res.redirect('login')
        })
        .catch(err => {
-        res.send(err)
+        if(err.name === 'SequelizeValidationError') {
+            const error = err.errors.map(el => el.message)
+            res.redirect(`/register?error=${error}`)
+        }else{
+            res.send(err)
+        }
        })
     }
 
@@ -33,23 +40,25 @@ class Controller {
     }
 
     static postLogin(req,res) {
-        const {username, password} = req.body
+        const {email, password} = req.body
 
-        User.findOne({ where: {username} })
+        User.findOne({ where: {email} })
         .then(user => {
             if(user) {
                 const isValidPassword = bcrypt.compareSync(password, user.password)
                 if(isValidPassword) {
-
-                    req.session.userId = user.id
                     req.session.role = user.role
-                    return res.redirect('/sellerHome')
+                    req.session.userId = user.id
+                    console.log(user)
+                    if(user.role === "Admin") {
+                        return res.redirect('adminHome')
+                    }
                 } else {
                     const error = 'wrong password'
                     return res.redirect(`/login?error=${error}`)
                 }
             } else {
-                const error = 'username/password not found'
+                const error = 'email/password not found'
                 return res.redirect(`/login?error=${error}`)
             }
         })
@@ -58,8 +67,16 @@ class Controller {
         })
     }
 
-    static sellerHome(req,res) {
-        res.render('sellerhome')
+    static logOut(req,res) {
+        req.session.destroy((err) => {
+            if(err) return res.send(err)
+            
+            res.redirect('/')
+        })
+    }
+
+    static adminHome(req,res) {
+        res.render('adminHome')
     }
 }
 

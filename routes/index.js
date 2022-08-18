@@ -19,7 +19,7 @@ routes.get('/login', Controller.login)
 routes.post('/login', Controller.postLogin)
 
 routes.use(function (req,res,next) {
-    console.log(req.session)
+    // console.log(req.session)
     if(!req.session.userId) {
         const error = 'Login first'
         res.redirect(`/login?error=${error}`)
@@ -28,17 +28,19 @@ routes.use(function (req,res,next) {
     } 
 })
 
+routes.get('/logout', Controller.logOut)
+
 routes.use(function (req,res,next) {
     console.log(req.session)
-    if(req.session.userId && req.session.role !== 'seller') {
-        const error = 'for seller only'
+    if(req.session.userId && req.session.role !== 'Admin') {
+        const error = 'for Admin only'
         res.redirect(`/login?error=${error}`)
     } else {
         next()
     } 
 })
 
-routes.get('/sellerHome', Controller.sellerHome)
+routes.get('/adminHome', Controller.adminHome)
 
 
 module.exports = routes
