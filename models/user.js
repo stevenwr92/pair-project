@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: {
           msg: 'Not an Email'
         },
+        unique: {
+          args:true,
+          msg: 'Email address already in use!'
+      }
       }
     },
     password: {
