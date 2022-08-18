@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/products/<%=result.id%>/edit/<%=result.Products[0].id%>" method="post">
+            <label>Product's Name</label>
+            <input type="text" name="name" value="<%=result.Products[0].name%>"><br>
+            <label>Description</label>
+            <textarea name="description" rows="4" cols="50"><%=el.description%></textarea><br>
+            <label>Price</label>
+            <input type="number" name="price" value="<%=el.price%>"><br>
+            <label>Category</label>
+            <select name="CategoryId">
+                <option value="1" <%=el.CategoryId=='1' ?'selected' : ''%>>Makanan</option>
+                <option value="2" <%=el.CategoryId=='2' ?'selected' : ''%>>Pakaian</option>
+                <option value="3" <%=el.CategoryId=='3' ?'selected' : ''%>>Elektronik</option>
+            </select><br>
+            <label>Seller's Name</label>
+            <select name="UserId">
+                <option value="<%=result.id%>"><%=result.username%></option>
+            </select><br>
+            <input type="submit" value="Edit Product"><br>
+    </form>
+</body>
+</html>

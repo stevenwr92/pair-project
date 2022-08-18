@@ -21,20 +21,92 @@ class Controller {
     }
 
     static productByUserId(req,res){
-        User.findAll({
-            include:Product,
+        const id=req.params.id
+        User.findByPk(id,{
+            include:[{
+                model:Product,
+                include:Category,
+                required:true
+            }],
             required:true
-        },{
+        })
+        .then(result=>{
+            // res.send(result)
+            res.render('productByUserId',{result})
+        })
+    }
+
+    static addProduct(req,res){
+        const id=req.params.id
+        User.findByPk(id,{
+            include:[{
+                model:Product,
+                include:Category,
+                required:true
+            }],
+            required:true
+        })
+        .then(result=>{
+            res.render('addProduct', {result})
+        })
+        .catch(err=>{
+            res.send(err)
+        })
+    }
+
+    static saveProduct(req,res){
+        const {name,description,price,CategoryId,UserId}=req.body
+        const{id}=req.params
+        // console.log(req.params,'<<ini req.params')
+        Product.create({name,description,price,CategoryId,UserId})
+            .then(result=>{
+                res.redirect(`/products/${id}`)
+            })
+            .catch(err=>{
+                res.send(err)
+            })
+    }
+
+    static editProduct(req,res){
+        const {id}=req.params
+        console.log(req.params)
+        User.findAll({
+            include:[{
+                model:Product,
+                include:Category,
+                required:true,
+                where:{
+                    id:req.params.id
+                }
+            }],
+            required:true
+        })
+        .then(result=>{
+            res.send(result)
+            // res.render('editProduct',{result})
+        })
+        .catch(err=>{
+            res.send(err)
+        })
+    }
+
+    static updateProduct(req,res){
+        res.send('masuk /products/edit')
+    }
+
+    static deleteProduct(req,res){
+        const{id}=req.params
+        console.log(req.params)
+        Product.destroy({
             where:{
                 id:req.params.id
             }
         })
         .then(result=>{
-            let productUserId=result.forEach(el => {
-                return el.Products
-            });
-            // res.send(productUserId)
-            res.render('productByUserId',{productUserId})
+            res.redirect(`/products/${id}`)
+        })
+        .catch(err=>{
+            res.send(err)
         })
     }
 
