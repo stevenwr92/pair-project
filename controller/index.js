@@ -63,6 +63,9 @@ class Controller {
                 res.redirect(`/products/${id}`)
             })
             .catch(err=>{
+                if(err.name==='Sequelize ValidationError'){
+                    err=err.errors.map(el=>el.message)
+                }
                 res.send(err)
             })
     }
@@ -91,7 +94,22 @@ class Controller {
     }
 
     static updateProduct(req,res){
-        res.send('masuk /products/edit')
+        const {name,description,price,CategoryId,UserId}=req.body
+        // console.log(req.params,'<<ini req.params')
+        Product.update({name,description,price,CategoryId,UserId},{
+            where:{
+                id:req.params.id
+            }
+        })
+            .then(result=>{
+                res.redirect(`/products/${id}`)
+            })
+            .catch(err=>{
+                if(err.name==='Sequelize ValidationError'){
+                    err=err.errors.map(el=>el.message)
+                }
+                res.send(err)
+            })
     }
 
     static deleteProduct(req,res){
