@@ -24,7 +24,7 @@
                         <td><%=el.id%></td>
                         <td><%=el.name%></td>
                         <td><%=el.description%></td>
-                        <td><%=el.price%></td>
+                        <td><%=convertNumber(el.price)%></td>
                         <td><%=el.Category.name%></td>
                         <td><button><a href="/products/<%=result.id%>/edit/<%=el.id%>">Edit Product</a></button>
                         <button><a href="/products/<%=result.id%>/delete/<%=el.id%>">Delete Product</a></button></td>

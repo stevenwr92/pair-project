@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const {User,Product,Category}=require('../models/index')
+const convertNumber=require('../helpers/convertPrice')
 
 class Controller {
     static home(req,res) {
@@ -10,7 +11,7 @@ class Controller {
         User.findAll({
             include:Product,
             required:true
-        })
+        },convertNumber)
         .then(result=>{
             // res.send(result)
             res.render('sellerHome', {result})
@@ -34,7 +35,7 @@ class Controller {
         .then(result=>{
             console.log(result)
             // res.send(result)
-            res.render('productByUserId',{result})
+            res.render('productByUserId',{result,convertNumber})
         })
     }
 
