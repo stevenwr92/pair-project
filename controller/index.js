@@ -23,7 +23,7 @@ class Controller {
 
     static productByUserId(req,res){
         const id=req.params.id
-        console.log(req.params,'<<dari ProductDetail')
+        // console.log(req.params,'<<dari ProductDetail')
         User.findByPk(id,{
             include:[{
                 model:Product,
@@ -45,7 +45,7 @@ class Controller {
             include:[{
                 model:Product,
                 include:Category,
-                required:true
+                required:false
             }],
             required:true
         })
