@@ -22,15 +22,17 @@ class Controller {
 
     static productByUserId(req,res){
         const id=req.params.id
+        console.log(req.params,'<<dari ProductDetail')
         User.findByPk(id,{
             include:[{
                 model:Product,
                 include:Category,
-                required:true
+                required:false
             }],
             required:true
         })
         .then(result=>{
+            console.log(result)
             // res.send(result)
             res.render('productByUserId',{result})
         })
@@ -64,14 +66,16 @@ class Controller {
             })
             .catch(err=>{
                 if(err.name==='Sequelize ValidationError'){
-                    err=err.errors.map(el=>el.message)
+                    err=err.errors.map(el=>{
+                      return el.message  
+                    })
                 }
                 res.send(err)
             })
     }
 
     static editProduct(req,res){
-        const {id}=req.params
+        const {ProductId,id}=req.params
         console.log(req.params)
         User.findAll({
             include:[{
@@ -79,14 +83,18 @@ class Controller {
                 include:Category,
                 required:true,
                 where:{
-                    id:req.params.id
+                    id:ProductId
                 }
             }],
             required:true
         })
         .then(result=>{
-            res.send(result)
-            // res.render('editProduct',{result})
+            let data=result.map(el=>{
+                return el
+            })
+            console.log(result)
+            // res.send(result)
+            res.render('editProduct',{result})
         })
         .catch(err=>{
             res.send(err)
@@ -96,9 +104,10 @@ class Controller {
     static updateProduct(req,res){
         const {name,description,price,CategoryId,UserId}=req.body
         // console.log(req.params,'<<ini req.params')
+        const{id,ProductId}=req.params
         Product.update({name,description,price,CategoryId,UserId},{
             where:{
-                id:req.params.id
+                id:req.params.ProductId
             }
         })
             .then(result=>{
@@ -113,11 +122,11 @@ class Controller {
     }
 
     static deleteProduct(req,res){
-        const{id}=req.params
-        console.log(req.params)
+        const{id,ProductId}=req.params
+        console.log(req.params,'<<dari delete')
         Product.destroy({
             where:{
-                id:req.params.id
+                id:ProductId
             }
         })
         .then(result=>{

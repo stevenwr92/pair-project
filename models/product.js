@@ -14,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
       Product.belongsTo(models.Category),
       Product.belongsTo(models.User)
     }
+
+    getConvert(){
+        this.price = this.price.toString();
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(x))
+            this.price = this.price.replace(pattern, "$1,$2");
+        return `Rp. ${this.price}`
+    }
   }
   Product.init({
     name: {

@@ -8,28 +8,30 @@
 </head>
 <body>
     <button><a href="/products/<%=result.id%>/add">Add Product</a></button><br><br>
-    <table border="1">
-        <thead>
-            <th>No</th>
-            <th>Nama Product</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Action</th>
-        </thead>
-        <tbody>
-            <%result.Products.forEach(el => {%>
-                <tr>
-                    <td><%=el.id%></td>
-                    <td><%=el.name%></td>
-                    <td><%=el.description%></td>
-                    <td><%=el.price%></td>
-                    <td><%=el.Category.name%></td>
-                    <td><button><a href="/products/<%=result.id%>/edit/<%=el.id%>">Edit Product</a></button></td>
-                    <td><button><a href="/products/<%=result.id%>/delete/<%=el.id%>">Delete Product</a></button></td>
-                </tr>
-            <%});%>
-        </tbody>
-    </table> 
-</body>
+    <%if (result.Products.length) {%>
+        <table border="1">
+            <thead>
+                <th>No</th>
+                <th>Nama Product</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                <%result.Products.forEach(el => {%>
+                    <tr>
+                        <td><%=el.id%></td>
+                        <td><%=el.name%></td>
+                        <td><%=el.description%></td>
+                        <td><%=el.price%></td>
+                        <td><%=el.Category.name%></td>
+                        <td><button><a href="/products/<%=result.id%>/edit/<%=el.id%>">Edit Product</a></button>
+                        <button><a href="/products/<%=result.id%>/delete/<%=el.id%>">Delete Product</a></button></td>
+                    </tr>
+                    <%});%>
+                </tbody>
+            </table> 
+            <% } %>
+        </body>
 </html>
