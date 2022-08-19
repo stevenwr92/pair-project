@@ -37,7 +37,15 @@ routes.use(function (req,res,next) {
     } 
 })
 
-routes.get('/adminHome', Controller.adminHome)
+//admin only
+
+routes.get('/sellerHome', Controller.sellerHome)
+routes.get('/products/:id',Controller.productByUserId)
+routes.get('/products/:id/add',Controller.addProduct)
+routes.post('/products/:id/add',Controller.saveProduct)
+routes.get('/products/:id/edit/:id',Controller.editProduct)
+routes.post('/products/:id/edit/:id',Controller.updateProduct)
+routes.get('/products/:id/delete/:id',Controller.deleteProduct)
 
 
 module.exports = routes

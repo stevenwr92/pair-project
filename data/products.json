@@ -1,0 +1,16 @@
+[
+    {
+      "name": "Beras Premium",
+      "description": "Dipanen di Desa Nganjuk",
+      "price": 100000,
+      "CategoryId":1,
+      "UserId":1
+    },
+    {
+      "name": "Citayem Fashion",
+      "description": "Ngehits banget dipakai saat Citayem Event",
+      "price": 50000,
+      "CategoryId":2,
+      "UserId":1
+    }
+  ]
